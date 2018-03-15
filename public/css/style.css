@@ -59,6 +59,9 @@
 .edit-text {
 	line-height: 2.5;
 }
+.check-text {
+    color: red;
+}
 .radio-align {
 	margin-left: 10px;
 }

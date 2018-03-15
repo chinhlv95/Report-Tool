@@ -8,11 +8,12 @@
 <body>
 	<div class="form-style">
 		<h2>Report</h2>
-		    <form method="POST" id="form" action="./mvc/controller/controller.php">
-		    	<label for="editcheck" class="edit-text">From Date: </label>
-			    <input type="date" name="from-date" style="margin-left: 20px" required /><br>
-			    <label for="editcheck" class="edit-text">To Date: </label>
-			    <input type="date" name="to-date" style="margin-left: 40px" required /><br>
+		    <form method="GET" id="form" action="">
+		    	<label for="check" class="check-text" id="check"></label><br>
+		    	<label for="from-date" class="edit-text">From Date: </label>
+			    <input type="date" name="from-date" id="from-date" style="margin-left: 20px" required /><br>
+			    <label for="to-date" class="edit-text">To Date: </label>
+			    <input type="date" name="to-date" id="to-date" style="margin-left: 40px" required /><br>
 			    <input type="button" value="Operation" onclick="operationReport()">
 			    <input type="button" value="Productivity" onclick="productivityReport()">
 		    </form>
