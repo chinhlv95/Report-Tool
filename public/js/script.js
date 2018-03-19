@@ -4,7 +4,7 @@ function productivityReport()
 	var to_date = document.getElementsByName("to-date")[0].value;
 	if (!from_date.match(/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/) || !to_date.match(/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/)) {
 		document.getElementById("check").style.display = 'block';
-		document.getElementById("check").innerHTML = "Please enter all field!";
+		document.getElementById("check").innerHTML = "Please enter all fields!";
 	} else {
 		document.getElementById("check").style.display = 'none';
 		document.getElementById("check").innerHTML = "";
@@ -18,7 +18,7 @@ function operationReport()
 	var to_date = document.getElementsByName("to-date")[0].value;
 	if (!from_date.match(/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/) || !to_date.match(/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/)) {
 		document.getElementById("check").style.display = 'block';
-		document.getElementById("check").innerHTML = "Please enter all field!";
+		document.getElementById("check").innerHTML = "Please enter all fields!";
 	} else {
 		document.getElementById("check").style.display = 'none';
 		document.getElementById("check").innerHTML = "";
