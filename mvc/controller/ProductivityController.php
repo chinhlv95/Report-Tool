@@ -36,10 +36,12 @@ $redmineData->getTimeEntries($timeEntryParam, $timeEntries);
 // Get Issue
 
 $issueParam 	= array('project_id' 	=> $projectId,
+						'tracker_id' 	=> 2,
 						'offset'		=> 0,
 				    	'limit' 		=> 100,
 				    	'sort' 			=> 'id');
 $issueClosedParam 	= array('project_id' => $projectId,
+						'tracker_id' 	=> 2,
 						'offset'		=> 0,
 				    	'limit' 		=> 100,
 				    	'status_id' 	=> 'closed',

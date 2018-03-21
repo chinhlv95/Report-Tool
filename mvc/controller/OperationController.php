@@ -86,5 +86,3 @@ $issuesAll = $report->getReportDataAll($issues, $allTimeEntries);
 // Export report
 
 $report->exportReportFile($startDate, $dueDate, $reportData, $issuesAll);
-
-

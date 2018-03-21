@@ -38,7 +38,7 @@ class ProductivityReport
 		return $result;	
 	}
 
-	public function buildTableData($objPHPSheet, $startRow, $title, $data, $status = '')
+	public function buildTableData($objPHPSheet, $startRow, $title, $data, $status = '', $type)
 	{
 		$objPHPSheet->getStyle('B' . $startRow . ':K' . $startRow)
 						->getFill()
@@ -79,15 +79,17 @@ class ProductivityReport
 		    			$actual_end_date = '';
 		    		}
 		    		$objPHPSheet->setCellValue('B' . $row, $stt);
-		    		$objPHPSheet->setCellValue('C' . $row, $value['subject']);
-		    		$objPHPSheet->setCellValue('D' . $row, 'SCS');
+			    	$objPHPSheet->setCellValue('C' . $row, $value['subject']);
+			    	$objPHPSheet->setCellValue('D' . $row, 'SCS');
 		    		$objPHPSheet->setCellValue('E' . $row, $value['estimated_hours']);
-		    		$objPHPSheet->setCellValue('F' . $row, 0);
-		    		$objPHPSheet->setCellValue('G' . $row, "=E" . $row . "-F" . $row);
-		    		$objPHPSheet->setCellValue('H' . $row, $value['spent_time']);
-		    		$objPHPSheet->setCellValue('I' . $row, "=G" . $row . "-H" . $row);
-		    		$objPHPSheet->setCellValue('J' . $row, $actual_end_date);
-		    		$objPHPSheet->setCellValue('K' . $row, '');
+		    		if ($type) {
+			    		$objPHPSheet->setCellValue('F' . $row, 0);
+			    		$objPHPSheet->setCellValue('G' . $row, "=E" . $row . "-F" . $row);
+			    		$objPHPSheet->setCellValue('H' . $row, $value['spent_time']);
+			    		$objPHPSheet->setCellValue('I' . $row, "=G" . $row . "-H" . $row);
+			    		$objPHPSheet->setCellValue('J' . $row, $actual_end_date);
+			    		$objPHPSheet->setCellValue('K' . $row, '');
+		    		}
 		    		$stt ++;
 		    	}
 	    	}
@@ -101,15 +103,17 @@ class ProductivityReport
 		    			$actual_end_date = '';
 		    		}
 		    		$objPHPSheet->setCellValue('B' . $row, $stt);
-		    		$objPHPSheet->setCellValue('C' . $row, $value['subject']);
-		    		$objPHPSheet->setCellValue('D' . $row, 'SCS');
+			    	$objPHPSheet->setCellValue('C' . $row, $value['subject']);
+			    	$objPHPSheet->setCellValue('D' . $row, 'SCS');
 		    		$objPHPSheet->setCellValue('E' . $row, $value['estimated_hours']);
-		    		$objPHPSheet->setCellValue('F' . $row, 0);
-		    		$objPHPSheet->setCellValue('G' . $row, "=E" . $row . "-F" . $row);
-		    		$objPHPSheet->setCellValue('H' . $row, $value['spent_time']);
-		    		$objPHPSheet->setCellValue('I' . $row, "=G" . $row . "-H" . $row);
-		    		$objPHPSheet->setCellValue('J' . $row, $actual_end_date);
-		    		$objPHPSheet->setCellValue('K' . $row, '');
+		    		if ($type) {
+			    		$objPHPSheet->setCellValue('F' . $row, 0);
+			    		$objPHPSheet->setCellValue('G' . $row, "=E" . $row . "-F" . $row);
+			    		$objPHPSheet->setCellValue('H' . $row, $value['spent_time']);
+			    		$objPHPSheet->setCellValue('I' . $row, "=G" . $row . "-H" . $row);
+			    		$objPHPSheet->setCellValue('J' . $row, $actual_end_date);
+			    		$objPHPSheet->setCellValue('K' . $row, '');
+		    		}
 		    		$stt ++;
 		    	}
 	    	}
@@ -121,16 +125,17 @@ class ProductivityReport
     	$totalRow2 	= $lastRow + 2;
     	$objPHPSheet->setCellValue('D' . $totalRow1 , "合計");
     	$objPHPSheet->setCellValue('E' . $totalRow1 , "=SUM(E" . $firstRow. ":E". $lastRow .")");
-    	$objPHPSheet->setCellValue('F' . $totalRow1 , "=SUM(F" . $firstRow. ":F". $lastRow .")");
-    	$objPHPSheet->setCellValue('G' . $totalRow1 , "=SUM(G" . $firstRow. ":G". $lastRow .")");
-    	$objPHPSheet->setCellValue('H' . $totalRow1 , "=SUM(H" . $firstRow. ":H". $lastRow .")");
-    	$objPHPSheet->setCellValue('I' . $totalRow1 , "=SUM(I" . $firstRow. ":I". $lastRow .")");
-    	$objPHPSheet->setCellValue('J' . $totalRow1 , "");
-    	$objPHPSheet->setCellValue('K' . $totalRow1 , "");
     	$objPHPSheet->setCellValue('D' . $totalRow2 , "人月");
-    	$objPHPSheet->setCellValue('F' . $totalRow2 , "=F" . $totalRow1 . "/160");
-    	$objPHPSheet->setCellValue('G' . $totalRow2 , "=G" . $totalRow1 . "/160");
-
+    	$objPHPSheet->setCellValue('E' . $totalRow2 , "=E" . $totalRow1 . "/160");
+    	if ($type) {
+	    	$objPHPSheet->setCellValue('F' . $totalRow1 , "=SUM(F" . $firstRow. ":F". $lastRow .")");
+	    	$objPHPSheet->setCellValue('G' . $totalRow1 , "=SUM(G" . $firstRow. ":G". $lastRow .")");
+	    	$objPHPSheet->setCellValue('H' . $totalRow1 , "=SUM(H" . $firstRow. ":H". $lastRow .")");
+	    	$objPHPSheet->setCellValue('I' . $totalRow1 , "=SUM(I" . $firstRow. ":I". $lastRow .")");
+	    	$objPHPSheet->setCellValue('J' . $totalRow1 , "");
+	    	$objPHPSheet->setCellValue('K' . $totalRow1 , "");
+	    	$objPHPSheet->setCellValue('G' . $totalRow2 , "=G" . $totalRow1 . "/160");
+    	}
     	$objPHPSheet->getStyle("B" . $firstRow. ":B" . $lastRow)->getAlignment()->applyFromArray(
 		    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
 		);
@@ -176,7 +181,7 @@ class ProductivityReport
 		$objPHPSheet = $objPHPExcel->getActiveSheet();
 		$objPHPSheet->setTitle('生産性' . $startDate . '-' . $dueDate);
 		$objPHPSheet->setCellValue('B1',"Co-well 生産性報告");
-    	$objPHPSheet->setCellValue('B2',"集計期間：" . date("Y-m-d", strtotime($startDate)) . "（金）〜 " . date("Y-m-d", strtotime($dueDate)) . "（木）");
+    	$objPHPSheet->setCellValue('B2',"集計期間：" . date("Y-m-d", strtotime($startDate)) . " 〜 " . date("Y-m-d", strtotime($dueDate)));
 		$objPHPSheet->getColumnDimension('A')->setWidth(3);
 		$objPHPSheet->getColumnDimension('B')->setWidth(7);
 		$objPHPSheet->getColumnDimension('C')->setWidth(65);
@@ -189,8 +194,8 @@ class ProductivityReport
 		$objPHPSheet->getColumnDimension('J')->setWidth(15);
 		$objPHPSheet->getColumnDimension('K')->setWidth(40);
 		
-		$endRow = $this->buildTableData($objPHPSheet, 5, '■今週完了チケット', $data, 'Closed');
-		$endRow = $this->buildTableData($objPHPSheet, $endRow + 3, '■次週以降完了予定チケット及びタスク（3/8 時点で把握できている内容）', $data);
+		$endRow = $this->buildTableData($objPHPSheet, 5, '■今週完了チケット', $data, 'Closed', 1);
+		$endRow = $this->buildTableData($objPHPSheet, $endRow + 3, '■次週以降完了予定チケット及びタスク', $data, '', 0);
 		$style = array('font' => array('size' => 10, 'name'  => 'Arial'));
 		$objPHPSheet->getStyle("A1:K" . $endRow)->applyFromArray($style);
 
