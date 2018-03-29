@@ -13,7 +13,7 @@ class ProductivityReport
 	{
 		$result = array();
 		foreach ($issues as $issue) {
-			if (!isset($issue['parent_id'])) {
+			if (!isset($issue['parent_id']) && $issue['tracker_id'] == 2) {
 				$parentId 		= $issue['issue_id'];
 				$childIssues	= array_filter($issues, function ($issues) use ($parentId) {
 									if (isset($issues['parent_id'])) {

@@ -30,6 +30,7 @@ class ProductivityRedmineData
 			$temp['assigned_to'] 		= $issue['assigned_to']['name'];
 			$temp['status'] 			= $issue['status']['name'];
 			$temp['subject'] 			= $issue['subject'];
+			$temp['tracker_id']			= $issue['tracker']['id'];
 			$temp['spent_time'] 		= 0;
 			$temp['actual_end_date'] 	= $issue['custom_fields'][1]['value'];
 			foreach ($issue['custom_fields'] as $custom_fields) {

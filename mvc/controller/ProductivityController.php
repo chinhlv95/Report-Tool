@@ -35,13 +35,13 @@ $redmineData->getTimeEntries($timeEntryParam, $timeEntries);
 
 // Get Issue
 
-$issueParam 	= array('project_id' 	=> $projectId,
-						'tracker_id' 	=> 2,
+$issueParam 	= array(
+						'project_id' 	=> $projectId,
 						'offset'		=> 0,
 				    	'limit' 		=> 100,
 				    	'sort' 			=> 'id');
-$issueClosedParam 	= array('project_id' => $projectId,
-						'tracker_id' 	=> 2,
+$issueClosedParam 	= array(
+						'project_id' => $projectId,
 						'offset'		=> 0,
 				    	'limit' 		=> 100,
 				    	'status_id' 	=> 'closed',
@@ -57,5 +57,3 @@ $reportData 	= $report->getReportData($startDate, $dueDate, $issues, $timeEntrie
 // Export report
 
 $report->exportReportFile($startDate, $dueDate, $reportData);
-
-
