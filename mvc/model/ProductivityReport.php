@@ -175,7 +175,7 @@ class ProductivityReport
 		$objPHPExcel 	= new PHPExcel();
 		$startDate 		= date("Ymd", strtotime($startDate));
 		$dueDate 		= date("Ymd", strtotime($dueDate));
-		$fileName 	 	= '生産性_'. date("Ym", strtotime($startDate)) .'_DH様.xls';
+		$fileName 	 	= '生産性_'. date("Ym", strtotime($startDate)) .'_DH様.xlsx';
 
 		// Read your Excel workbook
 		$objPHPSheet = $objPHPExcel->getActiveSheet();
@@ -201,7 +201,7 @@ class ProductivityReport
 
 	    header('content-type:application/csv;charset=UTF-8');
 		header('Content-Disposition: attachment;filename="' . $fileName . '"');
-	    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+	    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 		$objWriter->save('php://output');
 	}
 }

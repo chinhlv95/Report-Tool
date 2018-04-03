@@ -106,7 +106,7 @@ class OperationReport
 		$objPHPExcel 	= new PHPExcel();
 		$startDate 		= date("Ymd", strtotime($startDate));
 		$dueDate 		= date("Ymd", strtotime($dueDate));
-		$fileName 	 	= '稼働報告_'. date("Ym", strtotime($startDate)) .'_DH様.xls';
+		$fileName 	 	= '稼働報告_'. date("Ym", strtotime($startDate)) .'_DH様.xlsx';
 
 		// Read your Excel workbook
 		$objPHPSheet = $objPHPExcel->getActiveSheet();
@@ -151,16 +151,16 @@ class OperationReport
     	$objPHPSheet->setCellValue('L4',"HienTQ(Dev)");
     	$userArr 	  = array('JP Muramatsu', 'JP Saito6694', 'Pham Thinh', 'QA HuongLH6380', 'Dev Chinhlv6812', 'Dev HienTQ-6724');
     	$project_name = array();
-    	$category_id  = array();
+    	$category_name  = array();
     	foreach ($data as $key => $value) {
     		if ($value['spent_time'] == 0 || !in_array ($value['user_name'], $userArr)) {
     			unset($data[$key]);
     		} else {
 			    $project_name[$key]  = $value['project_name'];
-			    $category_id[$key] 	= $value['category_id'];
+			    $category_name[$key] 	= $value['category_name'];
 			}
 		}
-		array_multisort($project_name, SORT_ASC, $category_id, SORT_ASC, $data);
+		array_multisort($project_name, SORT_ASC, $category_name, SORT_ASC, $data);
     	$stt = 1;
     	$categoryArr = array();
     	foreach ($data as $key => $value) {
@@ -249,7 +249,7 @@ class OperationReport
 
 	    header('content-type:application/csv;charset=UTF-8');
 		header('Content-Disposition: attachment;filename="' . $fileName . '"');
-	    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+	    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 		$objWriter->save('php://output');
 	}
 }
