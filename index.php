@@ -16,6 +16,7 @@
 			    <input type="date" name="to-date" id="to-date" style="margin-left: 40px" required /><br>
 			    <input type="button" value="Operation" onclick="operationReport()">
 			    <input type="button" value="Productivity" onclick="productivityReport()">
+			    <input type="button" value="Monthly Report" onclick="monthlyReport()">
 		    </form>
 	</div>
 </body>
