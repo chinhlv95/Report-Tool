@@ -1,6 +1,7 @@
 <?php
 
 require_once './../../PHPExcel/PHPExcel.php';
+require_once './../../PHPExcel/PHPExcel/IOFactory.php';
 
 class MonthlyReport 
 {
@@ -34,14 +35,37 @@ class MonthlyReport
 		}
 	}
 
+	public function formatReportData(&$reportData)
+	{
+		$reportData['ThinhPQ'] = $reportData['Pham Thinh'];
+		$reportData['HuongLH'] = $reportData['QA HuongLH6380'];
+		$reportData['ChinhLV'] = $reportData['Dev Chinhlv6812'];
+		$reportData['HienTQ']  = $reportData['Dev HienTQ-6724'];
+		unset($reportData['Pham Thinh'], $reportData['QA HuongLH6380'], $reportData['Dev Chinhlv6812'], $reportData['Dev HienTQ-6724']);
+	}
+
+	public function formatExcelFile($date, $objPHPExcel)
+	{
+		$day   = date('j', strtotime($date));
+		$month = date('m', strtotime($date));
+		$year  = date('Y', strtotime($date));
+		$objPHPExcel->setActiveSheetIndexByName('集計');
+		$objPHPSheet = $objPHPExcel->getActiveSheet();
+		$objPHPSheet->setCellValue('F1', $date);
+		$objPHPSheet->setCellValue('A4', $year . "年" . $month . "月度 作業報告書（兼納品書）");
+	}
+
 	public function exportReportFile($startDate, $dueDate, $data)
 	{
 		// Create new PHPExcel object
-		$objPHPExcel 	= new PHPExcel();
+		$objPHPExcel 	= PHPExcel_IOFactory::createReader('Excel2007');
+		$objPHPExcel 	= $objPHPExcel->load('./../../template/template.xlsx');
 		$startDate 		= date("Ymd", strtotime($startDate));
 		$dueDate 		= date("Ymd", strtotime($dueDate));
 		$startDay 		= date('j', strtotime($startDate));
 		$dueDay 		= date('j', strtotime($dueDate));
+		$date 			= date("n/j/Y", strtotime($dueDate));
+
 		$fileName 	 	= 'Co-well 作業報告書_'. date("Ym", strtotime($startDate)) .'.xlsx';
 
 		// Unset ticket not used
@@ -67,32 +91,28 @@ class MonthlyReport
 		}
 
 		$this->getReportDataByUser($data, $reportData);
-		$stt = 0;
+		$this->formatReportData($reportData);
+		$this->formatExcelFile($date, $objPHPExcel);
 		foreach (array_keys($reportData) as $user) {
-			$objPHPSheet = $objPHPExcel->createSheet($stt);
-			$objPHPSheet->setTitle($user);
+			$startRow = 12;
+			$objPHPExcel->setActiveSheetIndexByName($user);
+			$objPHPSheet = $objPHPExcel->getActiveSheet();
 			for ($i = $startDay; $i <= $dueDay; $i ++) {
-				$objPHPSheet->setCellValue('B' . $i, $reportData[$user][$i]);
-				$objPHPSheet->getStyle('B' . $i)->getAlignment()->setWrapText(true);
-				$objPHPSheet->mergeCells('B'. $i .':C' . $i);
+				$row = $startRow + $i;
+				$objPHPSheet->setCellValue('H' . $row, $reportData[$user][$i]);
+				$objPHPSheet->getStyle('H' . $row)->getAlignment()->setWrapText(true);
+				$objPHPSheet->mergeCells('H'. $row .':I' . $row);
 			}
-			$objPHPSheet->getColumnDimension('B')->setWidth(50);
-			$style = array('font' => array('size' => 8, 'name'  => 'Arial'));
-			$objPHPSheet->getStyle('B'. $startDay .':B' . $dueDay)->applyFromArray($style);
-			$objPHPSheet->getStyle('B'. $startDay .':C' . $dueDay)->applyFromArray(
-			    array(
-			        'borders' => array(
-			            'allborders' => array(
-			                'style' => PHPExcel_Style_Border::BORDER_THIN,
-			                'color' => array('rgb' => '000000')
-			            )
-			        )
-			    )
-			);
-			$stt ++;
+			$objPHPSheet->getColumnDimension('H')->setWidth(50);
+			if ($dueDay < 31) {
+				$delRowNum = 31 - $dueDay;
+				for ($i = 1; $i <= $delRowNum; $i ++) {
+					$objPHPSheet->removeRow($dueDay + 13);
+				}
+			}
 		}
 
-	    header('content-type:application/csv;charset=UTF-8');
+	    header('content-type:application/vnd.ms-excel;charset=UTF-8');
 		header('Content-Disposition: attachment;filename="' . $fileName . '"');
 	    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 		$objWriter->save('php://output');
