@@ -70,17 +70,17 @@ class MonthlyReport
 
 		// Unset ticket not used
     	$userArr 	  = array('Pham Thinh', 'QA HuongLH6380', 'Dev Chinhlv6812', 'Dev HienTQ-6724');
-    	$issue_id = array();
+    	$category_id = array();
     	$project_name  = array();
     	foreach ($data as $key => $value) {
     		if ($value['spent_time'] == 0 || !in_array ($value['user_name'], $userArr)) {
     			unset($data[$key]);
     		} else {
-			    $issue_id[$key]  = $value['issue_id'];
+			    $category_id[$key]  = $value['category_id'];
 			    $project_name[$key] 	= $value['project_name'];
 			}
 		}
-		array_multisort($issue_id, SORT_ASC, $project_name, SORT_ASC, $data);
+		array_multisort($category_id, SORT_ASC, $project_name, SORT_ASC, $data);
 
 		// Create report data
 		$reportData = array();

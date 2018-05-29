@@ -50,6 +50,11 @@ class MonthlyReportRedmineData
 			$temp['subject'] 		= $issue['subject'];
 			$temp['project_name'] 	= $issue['project']['name'];
 			$temp['assigned_to'] 	= $issue['assigned_to']['name'];
+			if (isset($issue['category'])) {
+				$temp['category_id'] 	= $issue['category']['id'];
+			} else {
+				$temp['category_id'] 	= 0;
+			}
 			array_push($result, $temp);
 		}
 		if (count($issue1['issues']) == $issueParam1['limit'] || count($issue2['issues']) == $issueParam2['limit'] || count($issueClosed1['issues']) == $issueClosedParam1['limit'] || count($issueClosed2['issues']) == $issueClosedParam2['limit']) {
