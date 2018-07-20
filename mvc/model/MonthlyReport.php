@@ -70,17 +70,17 @@ class MonthlyReport
 
 		// Unset ticket not used
     	$userArr 	  = array('Pham Thinh', 'QA HuongLH6380', 'Dev Chinhlv6812', 'Dev HienTQ-6724');
-    	$category_id = array();
+    	$created_on = array();
     	$project_name  = array();
     	foreach ($data as $key => $value) {
     		if ($value['spent_time'] == 0 || !in_array ($value['user_name'], $userArr)) {
     			unset($data[$key]);
     		} else {
-			    $category_id[$key]  = $value['category_id'];
+			    $created_on[$key]  = $value['created_on'];
 			    $project_name[$key] 	= $value['project_name'];
 			}
 		}
-		array_multisort($category_id, SORT_ASC, $project_name, SORT_ASC, $data);
+		array_multisort($created_on, SORT_DESC, $project_name, SORT_ASC, $data);
 
 		// Create report data
 		$reportData = array();
@@ -101,6 +101,7 @@ class MonthlyReport
 				$row = $startRow + $i;
 				$objPHPSheet->setCellValue('H' . $row, $reportData[$user][$i]);
 				$objPHPSheet->getStyle('H' . $row)->getAlignment()->setWrapText(true);
+				$objPHPSheet->getRowDimension($row)->setRowHeight(-1);
 				$objPHPSheet->mergeCells('H'. $row .':I' . $row);
 			}
 			$objPHPSheet->getColumnDimension('H')->setWidth(50);

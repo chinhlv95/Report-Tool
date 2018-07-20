@@ -27,9 +27,7 @@ class MonthlyReportRedmineData
 			} else {
 				$value['parent_id']  = 0;
 			}
-			if ($value['parent_id'] != '5477') {
-				array_push($issue, $value);
-			}
+			array_push($issue, $value);
 		}
 		foreach ($issueClosed1['issues'] as $issueClosed) {
 			array_push($issue, $issueClosed);
@@ -40,10 +38,9 @@ class MonthlyReportRedmineData
 			} else {
 				$issueClosed['parent_id']  = 0;
 			}
-			if ($issueClosed['parent_id'] != '5477') {
-				array_push($issue, $issueClosed);
-			}
+			array_push($issue, $issueClosed);
 		}
+
 		foreach ($issue as $issue) {
 			$temp = array();
 			$temp['issue_id'] 		= $issue['id'];
@@ -55,6 +52,7 @@ class MonthlyReportRedmineData
 			} else {
 				$temp['category_id'] 	= 0;
 			}
+			$temp['created_on'] 	= $issue['created_on'];
 			array_push($result, $temp);
 		}
 		if (count($issue1['issues']) == $issueParam1['limit'] || count($issue2['issues']) == $issueParam2['limit'] || count($issueClosed1['issues']) == $issueClosedParam1['limit'] || count($issueClosed2['issues']) == $issueClosedParam2['limit']) {
